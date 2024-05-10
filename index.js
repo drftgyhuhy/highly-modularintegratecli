@@ -1,14 +1,13 @@
-function wordBreak(s, wordDict) {
-  const set = new Set(wordDict);
-  const dp = new Array(s.length + 1).fill(false);
-  dp[0] = true;
-  for (let end = 1; end <= s.length; end++) {
-    for (let start = 0; start < end; start++) {
-      if (dp[start] && set.has(s.substring(start, end))) {
-        dp[end] = true;
-        break;
-      }
+function lengthOfLongestSubstring(s) {
+  const map = new Map();
+  let maxLength = 0;
+  let left = 0;
+  for (let right = 0; right < s.length; right++) {
+    if (map.has(s[right])) {
+      left = Math.max(left, map.get(s[right]) + 1);
     }
+    map.set(s[right], right);
+    maxLength = Math.max(maxLength, right - left + 1);
   }
-  return dp[s.length];
+  return maxLength;
 }
