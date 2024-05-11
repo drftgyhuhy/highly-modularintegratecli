@@ -1,13 +1,24 @@
-function lengthOfLongestSubstring(s) {
-  const map = new Map();
-  let maxLength = 0;
-  let left = 0;
-  for (let right = 0; right < s.length; right++) {
-    if (map.has(s[right])) {
-      left = Math.max(left, map.get(s[right]) + 1);
-    }
-    map.set(s[right], right);
-    maxLength = Math.max(maxLength, right - left + 1);
+const mergeSort = (arr) => {
+  if (arr.length <= 1) {
+    return arr;
   }
-  return maxLength;
-}
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+};
+const merge = (left, right) => {
+  let result = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex]) {
+      result.push(left[leftIndex]);
+      leftIndex++;
+    } else {
+      result.push(right[rightIndex]);
+      rightIndex++;
+    }
+  }
+  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+};
