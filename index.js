@@ -1,24 +1,21 @@
-const mergeSort = (arr) => {
-  if (arr.length <= 1) {
-    return arr;
+function addTwoNumbers(l1, l2) {
+  const dummy = new ListNode(0);
+  let p = l1,
+    q = l2,
+    curr = dummy;
+  let carry = 0;
+  while (p !== null || q !== null) {
+    const x = p !== null ? p.val : 0;
+    const y = q !== null ? q.val : 0;
+    const sum = x + y + carry;
+    carry = Math.floor(sum / 10);
+    curr.next = new ListNode(sum % 10);
+    curr = curr.next;
+    if (p !== null) p = p.next;
+    if (q !== null) q = q.next;
   }
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid));
-  const right = mergeSort(arr.slice(mid));
-  return merge(left, right);
-};
-const merge = (left, right) => {
-  let result = [];
-  let leftIndex = 0;
-  let rightIndex = 0;
-  while (leftIndex < left.length && rightIndex < right.length) {
-    if (left[leftIndex] < right[rightIndex]) {
-      result.push(left[leftIndex]);
-      leftIndex++;
-    } else {
-      result.push(right[rightIndex]);
-      rightIndex++;
-    }
+  if (carry > 0) {
+    curr.next = new ListNode(carry);
   }
-  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
-};
+  return dummy.next;
+}
